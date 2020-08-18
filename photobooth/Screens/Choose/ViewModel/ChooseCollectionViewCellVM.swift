@@ -11,6 +11,7 @@ import UIKit
 
 protocol ChooseCollectionViewCellVMType: class {
     var object: MaskModel { get }
+    var isLandscape: Bool { get }
 }
 
 
@@ -18,9 +19,11 @@ protocol ChooseCollectionViewCellVMType: class {
 final class ChooseCollectionViewCellVM: ChooseCollectionViewCellVMType, CollectionViewCellType {
     var indexPath: IndexPath
     let object: MaskModel
+    var isLandscape: Bool
     
-    init(cell: MaskModel, indexPath: IndexPath) {
+    init(cell: MaskModel, indexPath: IndexPath, isLandscape: Bool) {
         self.object = cell
         self.indexPath = indexPath
+        self.isLandscape = isLandscape
     }
 }

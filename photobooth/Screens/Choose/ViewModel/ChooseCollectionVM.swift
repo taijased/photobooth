@@ -53,10 +53,14 @@ class ChooseCollectionVM: CollectionViewVMType {
     
     var cells: [CellModel]?
     
+    fileprivate var isLandscape: Bool = false
     
     init() {
         fetchCells()
     }
+    
+    
+
     
     fileprivate func fetchCells() {
         cells = [
@@ -69,6 +73,17 @@ class ChooseCollectionVM: CollectionViewVMType {
             MaskModel(id: "Sphere", name: "Sphere"),
             MaskModel(id: "Circle", name: "Circle"),
         ]
+        
+        
+        self.isLandscape = UIDevice.current.orientation.isLandscape
+        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+    
+    @objc func rotated() {
+        self.isLandscape = UIDevice.current.orientation.isLandscape
+        self.minimumInteritemSpacingForSectionAt = UIDevice.current.orientation.isLandscape ? 0 : 12.0
+        self.minimumLineSpacingForSectionAt =  UIDevice.current.orientation.isLandscape ? 0 : 12.0
+        self.onReloadData?()
     }
     
     
@@ -88,7 +103,7 @@ class ChooseCollectionVM: CollectionViewVMType {
     func cellViewModel(forIndexPath indexPath: IndexPath) -> CollectionViewCellVMType? {
         guard let cells = cells else { return nil }
         let cell = cells[indexPath.row]
-        return ChooseCollectionViewCellVM(cell: cell, indexPath: indexPath)
+        return ChooseCollectionViewCellVM(cell: cell, indexPath: indexPath, isLandscape: self.isLandscape)
     }
     
     func viewModelForSelectedRow() -> CellModel? {

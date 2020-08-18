@@ -34,8 +34,8 @@ class ChooseCollectionView: UICollectionView {
         layout.scrollDirection = .horizontal
         super.init(frame: .zero, collectionViewLayout: layout)
         viewModel = ChooseCollectionVM()
-        viewModel?.onReloadData = {
-            self.reloadData()
+        viewModel?.onReloadData = { [weak self] in
+            self?.reloadData()
         }
         setupCollectionSettings()
     }

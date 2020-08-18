@@ -15,32 +15,13 @@ final class PhotoViewController: UIViewController {
     
     fileprivate let controlsView: PhotoTopControlsView = PhotoTopControlsView()
     
-    fileprivate let opacityTopView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        return view
-    }()
     
-    fileprivate let opacityBottomView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        return view
-    }()
-    
-    fileprivate let opacityLeftView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        return view
-    }()
-    
-    fileprivate let opacityRightView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        return view
+    let imageView: WebImageView = {
+        let imageView = WebImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = .clear
+        return imageView
     }()
     
     override func viewDidLoad() {
@@ -51,49 +32,38 @@ final class PhotoViewController: UIViewController {
     
     
     
+    
+    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, image: UIImage) {
+        self.myImageView.image = image
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     fileprivate func setupUI() {
         
         view.backgroundColor = .white
-        view.addSubview(opacityBottomView)
-        opacityBottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        opacityBottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        opacityBottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        opacityBottomView.heightAnchor.constraint(equalToConstant: 150).isActive = true
-        
-        
-        view.addSubview(opacityTopView)
-        opacityTopView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        opacityTopView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        opacityTopView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        opacityTopView.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        
-        view.addSubview(opacityRightView)
-        opacityRightView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        opacityRightView.bottomAnchor.constraint(equalTo: opacityBottomView.topAnchor).isActive = true
-        opacityRightView.topAnchor.constraint(equalTo: opacityTopView.bottomAnchor).isActive = true
-        opacityRightView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        view.addSubview(opacityLeftView)
-        opacityLeftView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        opacityLeftView.bottomAnchor.constraint(equalTo: opacityBottomView.topAnchor).isActive = true
-        opacityLeftView.topAnchor.constraint(equalTo: opacityTopView.bottomAnchor).isActive = true
-        opacityLeftView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        
-        
         view.addSubview(controlsView)
         controlsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         controlsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         controlsView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         controlsView.heightAnchor.constraint(equalToConstant: 90).isActive = true
         
-        
-        
         controlsView.delegate = self
         
         
+        view.addSubview(imageView)
+        imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        imageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 90).isActive = true
         
+
     }
+
+  
 }
 
 
@@ -109,7 +79,6 @@ extension PhotoViewController: PhotoTopControlsViewDelegate {
             let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = self.view
             activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
-            
             self.present(activityViewController, animated: true, completion: nil)
         }
     }

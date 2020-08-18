@@ -57,7 +57,7 @@ final class PhotoTopControlsView: UIView {
         return button
     }()
     
-
+    
     
     @objc func doneButtonTapped(_ sender: UIButton) {
         print(#function)
@@ -89,8 +89,8 @@ final class PhotoTopControlsView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
-
-
+        
+        
         addSubview(opacityView)
         opacityView.fillSuperview()
         
@@ -99,14 +99,13 @@ final class PhotoTopControlsView: UIView {
         doneButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
         doneButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
         doneButton.heightAnchor.constraint(equalToConstant: 21).isActive = true
-      
+        
         addSubview(shareButton)
         shareButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
         shareButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
         shareButton.widthAnchor.constraint(equalToConstant: 17).isActive = true
         shareButton.heightAnchor.constraint(equalToConstant: 22).isActive = true
-        
+
     }
-    
     
 }

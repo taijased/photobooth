@@ -56,7 +56,7 @@ final class HomeBottomControlsView: UIView {
         return button
     }()
     
-
+    
     
     @objc func takePhotoButtonTapped(_ sender: UIButton) {
         sender.flash()
@@ -83,6 +83,7 @@ final class HomeBottomControlsView: UIView {
     }
     
     fileprivate func setupUI() {
+        
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         addSubview(opacityView)
@@ -93,12 +94,62 @@ final class HomeBottomControlsView: UIView {
         takePhotoButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         takePhotoButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
         takePhotoButton.heightAnchor.constraint(equalToConstant: 70).isActive = true
-      
+        
         addSubview(moreButton)
         moreButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         moreButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30).isActive = true
         moreButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         moreButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
+        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+        
+        
+        if UIDevice.current.orientation.isLandscape {
+            self.moreButton.rotate(angle: 90)
+        }
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+    
+    @objc func rotated() {
+        UIView.animate(withDuration: 0.25) {
+            switch UIDevice.current.orientation {
+            case .unknown:
+                break
+            case .portrait:
+                self.moreButton.transform = CGAffineTransform.identity
+            case .portraitUpsideDown:
+                break
+            case .landscapeLeft:
+                self.moreButton.rotate(angle: 90)
+            case .landscapeRight:
+                self.moreButton.rotate(angle: -90)
+            case .faceUp:
+                break
+            case .faceDown:
+                break
+            }
+        }
+    }
+    
+    
+    
+}
+
+
+extension UIView {
+
+    /**
+     Rotate a view by specified degrees
+
+     - parameter angle: angle in degrees
+     */
+    func rotate(angle: CGFloat) {
+        let radians = angle / 180.0 * CGFloat.pi
+        let rotation = self.transform.rotated(by: radians);
+        self.transform = rotation
+    }
+
 }

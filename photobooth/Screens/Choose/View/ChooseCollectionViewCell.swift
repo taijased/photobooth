@@ -21,6 +21,16 @@ class ChooseCollectionViewCell: UICollectionViewCell {
             
             guard let viewModel = viewModel else { return }
             label.text = viewModel.object.name
+            
+            
+            UIView.animate(withDuration: 0.25) {
+                if viewModel.isLandscape {
+                    self.rotate(angle: 90)
+                } else {
+                    self.transform = .identity
+                }
+            }
+
         }
     }
     
@@ -60,7 +70,7 @@ class ChooseCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
-//        label.font = UIFont.init(name: ".SFUIText-Medium", size: 14)
+        //        label.font = UIFont.init(name: ".SFUIText-Medium", size: 14)
         return label
     }()
     
@@ -116,16 +126,14 @@ class ChooseCollectionViewCell: UICollectionViewCell {
         defaultImageView.leadingAnchor.constraint(equalTo: myImageView.leadingAnchor).isActive = true
         defaultImageView.trailingAnchor.constraint(equalTo: myImageView.trailingAnchor).isActive = true
         defaultImageView.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
-        
-        
-        
+       
     }
-    
     
     override func prepareForReuse() {
         myImageView.image = nil
         label.text = nil
         viewModel = nil
+        self.transform = .identity
     }
     
     override func layoutSubviews() {
@@ -133,14 +141,11 @@ class ChooseCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = 10
     }
     
-
+    
     
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        self.viewModel = nil
-    }
 }

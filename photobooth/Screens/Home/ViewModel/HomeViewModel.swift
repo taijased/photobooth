@@ -6,7 +6,7 @@
 //  Copyright © 2020 Максим Спиридонов. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 
 
@@ -21,10 +21,15 @@ protocol HomeViewModelType {
 
 class HomeViewModel {
     
-    let bottomControls: HomeBottomControlsView = HomeBottomControlsView()
+    let bottomControls: HomeBottomControlsView
     var delegate: HomeViewModelDelegate?
     
     init() {
+        
+        bottomControls = HomeBottomControlsView()
+        
+//        frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 222, width: UIScreen.main.bounds.width, height: 150)
+        
         bottomControls.delegate = self
         
     }

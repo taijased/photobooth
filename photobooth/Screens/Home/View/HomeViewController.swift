@@ -45,9 +45,6 @@ final class HomeViewController: UIViewController, StoryboardInitializable {
         viewModel.bottomControls.heightAnchor.constraint(equalToConstant: 150).isActive = true
         
         
-        
-        
-        
         view.addSubview(opacityView)
         opacityView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         opacityView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -65,7 +62,7 @@ final class HomeViewController: UIViewController, StoryboardInitializable {
             self.dismiss(animated: true, completion: nil)
         case .photo:
             let viewController = PhotoViewController()
-            viewController.modalPresentationStyle = .fullScreen
+            viewController.modalPresentationStyle = .custom
             viewController.modalTransitionStyle = .crossDissolve
             self.present(viewController, animated: true, completion: nil)
         }
