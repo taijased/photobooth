@@ -15,8 +15,15 @@ final class PhotoViewController: UIViewController {
     
     fileprivate let controlsView: PhotoTopControlsView = PhotoTopControlsView()
     
+    fileprivate let visualEffectView: UIVisualEffectView = {
+
+        let view = UIVisualEffectView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.effect = nil
+        return view
+    }()
     
-    let imageView: WebImageView = {
+    fileprivate let imageView: WebImageView = {
         let imageView = WebImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
@@ -34,7 +41,7 @@ final class PhotoViewController: UIViewController {
     
     
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, image: UIImage) {
-        self.myImageView.image = image
+        self.imageView.image = image
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -44,7 +51,13 @@ final class PhotoViewController: UIViewController {
     
     fileprivate func setupUI() {
         
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
+        
+        
+        view.addSubview(visualEffectView)
+        visualEffectView.fillSuperview()
+        visualEffectView.effect = UIBlurEffect(style: .extraLight)
+        
         view.addSubview(controlsView)
         controlsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         controlsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -55,12 +68,13 @@ final class PhotoViewController: UIViewController {
         
         
         view.addSubview(imageView)
-        imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        imageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 90).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 429).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 320).isActive = true
         
-
+        
+        
     }
 
   

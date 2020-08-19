@@ -61,7 +61,9 @@ final class HomeViewController: UIViewController, StoryboardInitializable {
         case .dismiss:
             self.dismiss(animated: true, completion: nil)
         case .photo:
-            let viewController = PhotoViewController()
+            
+            guard let image = UIImage(named: "temp-photo") else { return }
+            let viewController = PhotoViewController(nibName: nil, bundle: nil, image: image)
             viewController.modalPresentationStyle = .custom
             viewController.modalTransitionStyle = .crossDissolve
             self.present(viewController, animated: true, completion: nil)
